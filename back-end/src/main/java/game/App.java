@@ -3,6 +3,7 @@ package game;
 import java.io.IOException;
 import java.util.Map;
 import fi.iki.elonen.NanoHTTPD;
+import java.util.List;
 
 public class App extends NanoHTTPD {
 
@@ -38,6 +39,13 @@ public class App extends NanoHTTPD {
         } else if (uri.equals("/play")) {
             // e.g., /play?x=1&y=1
             this.game = this.game.play(Integer.parseInt(params.get("x")), Integer.parseInt(params.get("y")));
+        } else if (uri.equals("/undo")) {
+            List<Game> history = this.game.getListOfGames();
+            if (history.size() == 1) {
+                this.game = new Game();
+            } else {
+                this.game = history.get(history.size() - 1);
+            }
         }
         // Extract the view-specific data from the game and apply it to the template.
         GameState gameplay = GameState.forGame(this.game);

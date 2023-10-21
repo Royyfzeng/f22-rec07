@@ -68,4 +68,9 @@ public class Game {
             return board.getCell(1, 1);
         return null;
     }
+
+    public List<Game> getListOfGames() {
+        return this.history;
+    }
+
 }
